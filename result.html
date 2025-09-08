@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .score {
+            color: #00c853;
+            font-size: 1.5em;
+            font-weight: bold;
+            animation: pop 0.6s ease;
+        }
+        @keyframes pop {
+            0% { transform: scale(1); color: #444; }
+            50% { transform: scale(1.4); color: #ff9800; }
+            100% { transform: scale(1); color: #00c853; }
+        }
+        .special {
+            font-size: 1.2em;
+            color: #ff5722;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Result</h1>
+        <p><strong>Q:</strong> {{ question }}</p>
+        <p><strong>Your answer:</strong> {{ user_answer }}</p>
+        <p><strong>Expected answer:</strong> {{ expected_answer }}</p>
+        <p><strong>Similarity:</strong> {{ '%.1f' | format(similarity*100) }}%</p>
+
+        <p><strong>🎯 Points this round:</strong> <span class="score">+{{ points_awarded }}</span></p>
+        <p><strong>🔥 Total Score:</strong> <span class="total">{{ total_points }}</span></p>
+        <p><strong>⚡ Streak:</strong> <span class="streak">{{ streak }}</span></p>
+
+        {% if badges %}
+            <p><strong>🏅 Badges:</strong> {{ badges | join(', ') }}</p>
+        {% endif %}
+
+        {% if special_msg %}
+            <p class="special">{{ special_msg }}</p>
+        {% endif %}
+
+        <h3>Feedback</h3>
+        <p>{{ feedback }}</p>
+
+        <form action="{{ url_for('ask') }}">
+            <button type="submit">Next Question</button>
+        </form>
+        <form action="{{ url_for('index') }}">
+            <button type="submit">Home</button>
+        </form>
+        
+    </div>
+    <div class="result-card">
+    <h2>Result</h2>
+    <p><b>Q:</b> {{ question }}</p>
+    <p><b>Your answer:</b> {{ user_answer }}</p>
+    <p><b>Expected answer:</b> {{ expected_answer }}</p>
+    <p>🎯 <b>Similarity:</b> {{ similarity }}%</p>
+    <p>🏆 <b>Points this round:</b> +{{ points_awarded }}</p>
+</div>
+
+<div class="scoreboard">
+    <span>🔥 Total Score: {{ total_points }}</span>
+    <span>⚡ Streak: {{ streak }}</span>
+</div>
+
+<div class="feedback">
+    <h3>💡 Feedback</h3>
+    <p>{{ feedback }}</p>
+</div>
+
+<a href="{{ url_for('ask', subject=subject) }}" class="btn">Next Question ➡️</a>
+<a href="{{ url_for('index') }}" class="btn">🏠 Home</a>
+
+
+</body>
+</html>
+
+

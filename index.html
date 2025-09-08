@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+  <h1>Interview Prep — Choose a Subject</h1>
+  <p class="score">Points: {{ points }} &nbsp; Streak: {{ streak }}</p>
+
+  <div class="subject-grid">
+    <form action="{{ url_for('start', subject='os') }}"><button class="subject-btn">Operating Systems</button></form>
+    <form action="{{ url_for('start', subject='cn') }}"><button class="subject-btn">Computer Networks</button></form>
+    <form action="{{ url_for('start', subject='dbms') }}"><button class="subject-btn">DBMS</button></form>
+  </div>
+
+  <div style="margin-top:18px">
+    <a href="{{ url_for('reset') }}" class="reset">Reset Progress</a>
+  </div>
+{% endblock %}
+

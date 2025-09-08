@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block body %}
+  <h2>{{ subject }} Interview Mode</h2>
+  <p class="score">Points: {{ points }} &nbsp; Streak: {{ streak }}</p>
+
+  <div class="question">Q: {{ question }}</div>
+
+  <form action="{{ url_for('check') }}" method="post">
+    <textarea id="user_answer" name="user_answer" rows="6" placeholder="Type or speak your answer..." required></textarea><br>
+    <button type="button" onclick="startListening()" class="voice-btn">🎤 Speak</button>
+    <button type="submit" class="btn">Submit</button>
+  </form>
+
+  <a href="{{ url_for('index') }}" class="back-link">← Back</a>
+
+  <script>
+  function startListening(){
+    if (!('webkitSpeechRecognition' in window)) { alert('Use Chrome for voice input'); return; }
+    const r = new webkitSpeechRecognition();
+    r.lang = 'en-US';
+    r.interimResults = false;
+    r.maxAlternatives = 1;
+    r.start();
+    r.onresult = e => document.getElementById('user_answer').value = e.results[0][0].transcript;
+    r.onerror = e => console.log('Speech error', e);
+  }
+  </script>
+{% endblock %}
