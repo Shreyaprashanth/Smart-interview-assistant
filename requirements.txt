@@ -4,3 +4,4 @@ sentence-transformers
 numpy
 openai
 python-dotenv
+sqlite3
